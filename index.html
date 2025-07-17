@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakery Products</title>
+    <!-- Google Fonts for Playfair Display (headings) and Open Sans (body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles & Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; /* A general sans-serif font for body text */
+            line-height: 1.6;
+            color: #333; /* Dark grey for text */
+            background-color: #f5f0e1; /* Light beige/off-white background */
+            direction: ltr; /* Set default direction to Left-to-Right for English content */
+            text-align: left; /* Align text to the left for LTR */
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif; /* A more decorative serif font for headings */
+            color: #5a4b3f; /* Darker brown for headings */
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.5em; /* Adjust as needed */
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        a {
+            text-decoration: none;
+            color: #5a4b3f;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #a08c77; /* Lighter brown on hover */
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            /* Added transform and box-shadow to transition */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn.primary-btn {
+            background-color: #8c7851; /* Greenish-brown */
+            color: #fff;
+        }
+
+        .btn.primary-btn:hover {
+            background-color: #a08c77; /* Lighter brown */
+            transform: translateY(-2px) scale(1.02); /* Slight lift and scale */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow */
+        }
+
+        .btn.secondary-btn {
+            background-color: #f0e6d6; /* Light beige */
+            color: #5a4b3f;
+            border: 1px solid #8c7851;
+        }
+
+        .btn.secondary-btn:hover {
+            background-color: #e0d5c4;
+            color: #333;
+            transform: translateY(-2px) scale(1.02); /* Slight lift and scale */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow */
+        }
+
+        .btn.tertiary-btn {
+            background-color: #f0e6d6;
+            color: #5a4b3f;
+            border: 1px solid #d3c7b2;
+        }
+
+        .btn.tertiary-btn:hover {
+            background-color: #e0d5c4;
+            transform: translateY(-2px) scale(1.02); /* Slight lift and scale */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow */
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #f0e6d6; /* Light beige */
+            padding: 10px 0;
+            font-size: 0.85em;
+            color: #5a4b3f;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-info span {
+            margin-right: 20px; /* Changed from margin-left for LTR */
+            margin-left: 0; /* Ensure no conflicting margin */
+        }
+
+        .top-info span:last-child {
+            margin-right: 0; /* Changed from margin-left for LTR */
+        }
+
+        .express-cake span {
+            font-weight: bold;
+        }
+
+        /* Header */
+        .header {
+            background-color: #fff;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            /* Removed sticky positioning */
+            /* position: sticky; */
+            /* top: 0; */
+            /* z-index: 1000; */
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #5a4b3f;
+        }
+
+        .main-nav ul {
+            display: flex;
+        }
+
+        .main-nav ul li {
+            margin-right: 30px; /* Changed from margin-left for LTR */
+            margin-left: 0; /* Ensure no conflicting margin */
+        }
+        .main-nav ul li:last-child {
+            margin-right: 0;
+        }
+
+        .main-nav ul li a {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.95em;
+        }
+
+        /* Cart Icon in Header */
+        .cart-icon-container {
+            display: flex;
+            align-items: center;
+            font-size: 1.2em;
+            color: #5a4b3f;
+            margin-left: 20px; /* Adjust spacing */
+            cursor: pointer; /* Indicate clickable */
+            transition: transform 0.3s ease; /* Added transition for hover effect */
+        }
+        .cart-icon-container:hover {
+            transform: scale(1.1); /* Slight scale on hover for cart icon */
+        }
+        #cart-count {
+            background-color: #8c7851;
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 0.8em;
+            margin-left: 5px;
+            min-width: 25px; /* Ensure it's wide enough for double digits */
+            text-align: center;
+        }
+
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            /* Removed background-color to make it transparent */
+            background-color: transparent; /* Changed to transparent */
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+            overflow: hidden; /* To contain absolute positioned images */
+        }
+
+        .hero-content {
+            z-index: 2; /* Bring text to front */
+            color: #5a4b3f;
+            max-width: 800px;
+        }
+
+        .hero-subheading {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #8c7851;
+        }
+
+        .hero-section h1 {
+            font-size: 4.5em;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            color: #5a4b3f;
+        }
+
+        .hero-section .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+        }
+
+        /* Animated Bread Images - now static and smaller */
+        .animated-bread {
+            position: absolute;
+            z-index: 1; /* Below text, above background */
+            pointer-events: none; /* Allow clicks through to elements below */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+        }
+        .animated-bread:hover {
+            transform: scale(1.05); /* Slight scale on hover */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+
+        /* Specific positions and adjusted sizes for static bread images */
+        .animated-bread.bread-1 { top: 10%; left: 8%; width: 250px; } /* Slightly smaller, top-left */
+        .animated-bread.bread-2 { bottom: 15%; left: 8%; width: 160px; } /* Slightly smaller, raised, bottom-left */
+        .animated-bread.bread-3 { top: 10%; right: 8%; width: 350px; } /* Slightly smaller, top-right */
+        .animated-bread.bread-4 { bottom: 10%; right: 8%; width: 220px; } /* Slightly smaller, bottom-right */
+
+
+        /* Why Choose Us Section */
+        .choose-us-section {
+            padding: 80px 0;
+            background-color: #f0e6d6;
+            text-align: center;
+        }
+
+        .choose-us-section h2 {
+            color: #5a4b3f;
+        }
+
+        .section-description {
+            max-width: 700px;
+            margin: 0 auto 50px;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            cursor: pointer; /* Indicate clickable */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+        }
+        .feature-item:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+
+
+        .feature-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease; /* Added transition */
+        }
+        .feature-item img:hover {
+            transform: scale(1.03); /* Slight scale on image hover */
+        }
+
+        .feature-item h3 {
+            font-size: 1.8em;
+            color: #8c7851;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+        }
+
+        /* Hidden details for feature items */
+        .feature-details {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #5a4b3f;
+            font-size: 0.9em;
+            text-align: left;
+        }
+
+        .feature-details.show {
+            display: block; /* Show when 'show' class is added */
+        }
+
+        /* Visit Us Section */
+        .visit-us-section {
+            padding: 40px 0; /* Reduced padding-top to move it up */
+            background-color: #fff;
+        }
+
+        .visit-us-section .container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .visit-us-content {
+            flex: 1;
+            text-align: left; /* Changed from right for LTR */
+        }
+
+        .visit-us-content h2 {
+                text-align: left; /* Override center alignment for h2, changed from right for LTR */
+            font-size: 2.8em;
+            margin-bottom: 20px;
+        }
+
+        .visit-us-content p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .visit-us-images {
+            flex: 0.7;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .visit-us-images img {
+            width: calc(33% - 20px); /* Adjust based on desired layout */
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            object-fit: cover;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+        }
+        .visit-us-images img:hover {
+            transform: scale(1.05); /* Slight scale on hover */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+
+        /* Adjust specific image sizes for visual balance */
+        .visit-us-images img:nth-child(1) { width: 180px; height: 180px; }
+        .visit-us-images img:nth-child(2) { width: 130px; height: 130px; }
+        .visit-us-images img:nth-child(3) { width: 220px; height: 220px; }
+
+
+        /* Product Gallery Section */
+        .product-gallery {
+            padding-bottom: 80px;
+            background-color: #f5f0e1;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Flexible columns */
+            gap: 30px;
+        }
+
+        .gallery-item {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Push image to top, text to bottom */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+            cursor: pointer; /* Indicate clickable */
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px; /* Reverted to original height for consistency */
+            object-fit: cover; /* Crop images to fit */
+            display: block;
+        }
+
+        .gallery-item.large img {
+            height: 400px; /* Reverted to original height for large items */
+        }
+
+        .gallery-item p {
+            padding: 15px;
+            font-weight: 600;
+            color: #5a4b3f;
+            font-size: 1.1em;
+            margin-bottom: 0; /* Remove default paragraph margin */
+        }
+
+        /* Add to Cart Button Styling */
+        .add-to-cart-btn {
+            margin-top: 15px;
+            width: calc(100% - 30px); /* Adjust width to fit padding */
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            background-color: #8c7851;
+            color: #fff;
+            border-radius: 50px; /* Made more rounded */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Added transform and box-shadow to transition */
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #a08c77;
+            transform: translateY(-2px) scale(1.02); /* Slight lift and scale */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow */
+        }
+
+
+        /* Testimonials Section */
+        .testimonials-section {
+            background-color: #fff;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .testimonials-section h2 {
+            color: #5a4b3f;
+            margin-bottom: 50px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonial-item {
+            background-color: #f0e6d6;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+            cursor: pointer; /* Indicate clickable */
+        }
+        .testimonial-item:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+
+        .testimonial-item p {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #8c7851;
+            font-size: 1.1em;
+        }
+
+        /* Contact Us Section */
+        .contact-section {
+            background-color: #f0e6d6;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            color: #5a4b3f;
+            margin-bottom: 50px;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px; /* Minimum width before wrapping */
+            text-align: left;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+            cursor: pointer; /* Indicate clickable */
+        }
+        .contact-info:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+
+        .contact-info h3 {
+            color: #8c7851;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            color: #5a4b3f;
+            font-size: 1.05em;
+        }
+
+        .contact-info p strong {
+            color: #333;
+        }
+
+        .contact-form {
+            flex: 2;
+            min-width: 400px; /* Minimum width before wrapping */
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+            cursor: pointer; /* Indicate clickable */
+        }
+        .contact-form:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5a4b3f;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #d3c7b2;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+            color: #333;
+            background-color: #fdfcf9;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form .btn {
+            width: auto; /* Override full width for form button */
+            padding: 12px 30px;
+            font-size: 1em;
+        }
+
+
+        /* Footer */
+        .footer {
+            background-color: #5a4b3f;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        /* Modal Styles */
+        .product-modal-overlay,
+        .cart-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Above everything */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .product-modal-overlay.show-modal,
+        .cart-modal-overlay.show-modal {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .product-modal-content,
+        .cart-modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            max-height: 90vh; /* Limit height for scrollability */
+            overflow-y: auto; /* Enable scrolling for long content */
+        }
+
+        .product-modal-close,
+        .cart-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #5a4b3f;
+            font-weight: bold;
+        }
+
+        .product-modal-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .product-modal-title,
+        .cart-modal-title {
+            font-size: 2em;
+            color: #5a4b3f;
+            margin-bottom: 10px;
+        }
+
+        .product-modal-price {
+            font-size: 1.5em;
+            color: #8c7851;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .product-modal-ingredients {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        /* Cart Modal Specific Styles */
+        #cart-items-container {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            max-height: 300px; /* Limit height for scroll */
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .cart-item-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .cart-item-display:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .cart-item-info .item-name {
+            font-weight: 600;
+            color: #5a4b3f;
+        }
+
+        .cart-item-info .item-price {
+            color: #8c7851;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cart-item-controls .quantity-btn,
+        .cart-item-controls .remove-item-btn {
+            background-color: #d3c7b2;
+            color: #5a4b3f;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 8px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.2s ease;
+        }
+
+        .cart-item-controls .quantity-btn:hover,
+        .cart-item-controls .remove-item-btn:hover {
+            background-color: #a08c77;
+            color: #fff;
+        }
+
+        .cart-item-controls .item-quantity {
+            font-weight: bold;
+            color: #333;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .cart-summary {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #8c7851;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #5a4b3f;
+        }
+
+        .cart-summary .btn {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #empty-cart-message {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+            .main-nav ul li {
+                margin: 10px 0;
+            }
+            .btn {
+                margin-top: 20px;
+            }
+            .hero-section h1 {
+                font-size: 3em;
+            }
+            /* Hide animated bread images on smaller screens for simplicity/performance */
+            .animated-bread {
+                display: none;
+            }
+            .features-grid {
+                grid-template-columns: 1fr; /* Stack columns */
+            }
+            .visit-us-section .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .visit-us-content h2 {
+                text-align: center;
+            }
+            .visit-us-images img {
+                width: 150px;
+                height: 150px;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery-item.large img {
+                height: 300px; /* Adjusted for smaller screens, back to original desktop size */
+            }
+            .gallery-item img {
+                height: 250px; /* Adjusted for smaller screens, back to original desktop size */
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr; /* Stack testimonials */
+            }
+            .contact-content {
+                flex-direction: column; /* Stack contact info and form */
+                gap: 30px;
+            }
+            .contact-info,
+            .contact-form {
+                min-width: auto; /* Remove min-width to allow full width */
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-bar .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .top-info span {
+                margin-right: 0; /* Changed from margin-left for LTR */
+                margin-bottom: 5px;
+                display: block;
+            }
+            .express-cake {
+                margin-top: 10px;
+            }
+            .hero-section h1 {
+                font-size: 2.5em;
+            }
+            .product-modal-content,
+            .cart-modal-content {
+                padding: 20px;
+            }
+            .product-modal-title,
+            .cart-modal-title {
+                font-size: 1.5em;
+            }
+            .product-modal-price {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar - Top bar for basic information -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-info">
+                <span>ORGANIC & VEGAN BAKERY</span>
+                <span>CALL US: +2010 1234 5678</span>
+                <span>EMAIL US: INFO@BAKERY.COM</span>
+            </div>
+            <div class="express-cake">
+                <span>EXPRESS CAKE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header - Page header with logo and main navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="#">BAKERY</a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#hero-section">HOME</a></li>
+                    <li><a href="#product-gallery">MENU</a></li>
+                    <li><a href="#choose-us-section">ABOUT</a></li>
+                    <li><a href="#contact-section">CONTACT US</a></li>
+                </ul>
+            </nav>
+            <button class="btn primary-btn scroll-to-products">ORDER NOW</button>
+            <!-- Cart Icon and Count -->
+            <div class="cart-icon-container" id="open-cart-btn">
+                🛒 <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - Main section with heading and animated bread images -->
+    <section class="hero-section" id="hero-section">
+        <div class="hero-content">
+            <p class="hero-subheading">BAKERY FROM OUR HOME TO YOUR HOME</p>
+            <h1>Freshly Baked, Just for You!</h1>
+            <button class="btn secondary-btn scroll-to-products">ORDER NOW</button>
+        </div>
+
+        <!-- Animated Bread Elements - now static and positioned -->
+        <!-- IMPORTANT: Place your actual image files in an 'images' subdirectory relative to this HTML file -->
+        <img src="images/my-croissant-1.png" onerror="this.src='https://via.placeholder.com/300x200/d3c7b2/5a4b3f?text=Croissant+1_Placeholder'" alt="Croissant" class="animated-bread bread-1">
+        <img src="images/my-donut-1.png" onerror="this.src='https://via.placeholder.com/200x150/d3c7b2/5a4b3f?text=Donut+1_Placeholder'" alt="Donut" class="animated-bread bread-2">
+        <img src="images/my-croissant-2.png" onerror="this.src='https://via.placeholder.com/400x250/d3c7b2/5a4b3f?text=Croissant+2_Placeholder'" alt="Larger Croissant" class="animated-bread bread-3">
+        <img src="images/my-pastry-1.png" onerror="this.src='https://via.placeholder.com/250x180/d3c7b2/5a4b3f?text=Pastry+1_Placeholder'" alt="Pastry" class="animated-bread bread-4">
+    </section>
+
+    <!-- Why Choose Us Section - Section about why to choose us with bakery features -->
+    <section class="choose-us-section" id="choose-us-section">
+        <div class="container">
+            <h2>Why Choose Us?</h2>
+            <p class="section-description">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            </p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <img src="images/Artisan_Breads.png" onerror="this.src='https://via.placeholder.com/300x200?text=Artisan+Breads_Placeholder'" alt="Artisan Breads">
+                    <h3>Artisan Breads</h3>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <div class="feature-details">
+                        <p>Our artisan breads are crafted with the finest organic flours and slow-fermented for a rich flavor and perfect crust. Each loaf is a testament to traditional baking methods and a passion for quality.</p>
+                    </div>
+                    <button class="btn tertiary-btn view-details-btn">View Details</button>
+                </div>
+                <div class="feature-item">
+                    <img src="images/Sweet_Pastries.png" onerror="this.src='https://via.placeholder.com/300x200?text=Sweet+Pastries_Placeholder'" alt="Sweet Pastries">
+                    <h3>Sweet Pastries</h3>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <div class="feature-details">
+                        <p>Indulge in our delightful selection of sweet pastries, from flaky croissants to decadent muffins. Made with natural sweeteners and fresh fruits, they're a guilt-free treat for any time of day.</p>
+                    </div>
+                    <button class="btn tertiary-btn view-details-btn">View Details</button>
+                </div>
+                <div class="feature-item">
+                    <img src="images/Custom_Cakes.png" onerror="this.src='https://via.placeholder.com/300x200?text=Custom+Cakes_Placeholder'" alt="Custom Cakes">
+                    <h3>Custom Cakes</h3>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <div class="feature-details">
+                        <p>Celebrate your special moments with our custom-designed cakes. Whether it's a birthday, anniversary, or wedding, our bakers will create a stunning and delicious centerpiece tailored to your vision.</p>
+                    </div>
+                    <button class="btn tertiary-btn view-details-btn">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visit Us Section - Visit us section with contact info and images -->
+    <section class="visit-us-section" id="visit-us-section">
+        <div class="container">
+            <div class="visit-us-content">
+                <h2>Visit Us Today</h2>
+                <p>
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                </p>
+                <button class="btn primary-btn scroll-to-contact">VISIT US NOW</button>
+            </div>
+            <div class="visit-us-images">
+                <img src="images/Donut_Set.png" onerror="this.src='https://via.placeholder.com/150x150?text=Donut+Set_Placeholder'" alt="Donuts">
+                <img src="images/Cupcake.png" onerror="this.src='https://via.placeholder.com/100x100?text=Cupcake_Placeholder'" alt="Cupcake">
+                <img src="images/Pie.png" onerror="this.src='https://via.placeholder.com/200x200?text=Pie_Placeholder'" alt="Pie">
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Gallery Section - Product gallery with various images -->
+    <section class="product-gallery" id="product-gallery">
+        <div class="container gallery-grid">
+            <div class="gallery-item large" data-product-name="Classic Red Velvet Cake" data-product-price="35.00" data-product-image="images/Classic_Red_Velvet_Cake.png" data-product-ingredients="Flour, sugar, cocoa, buttermilk, eggs, vanilla, cream cheese frosting.">
+                <img src="images/Classic_Red_Velvet_Cake.png" onerror="this.src='https://via.placeholder.com/400x450/d3c7b2/5a4b3f?text=Classic+Red+Velvet+Cake_Placeholder'" alt="Delicious Cake">
+                <p>Classic Red Velvet Cake</p>
+                <button class="btn primary-btn add-to-cart-btn" data-product-name="Classic Red Velvet Cake" data-product-price="35.00">Add to Cart</button>
+            </div>
+            <div class="gallery-item" data-product-name="Assorted Pastries" data-product-price="20.00" data-product-image="images/Pastry_Assortment.png" data-product-ingredients="Assorted flours, butter, sugar, various fruit fillings, chocolate.">
+                <img src="images/Pastry_Assortment.png" onerror="this.src='https://via.placeholder.com/250x200/d3c7b2/5a4b3f?text=Pastry+Assortment_Placeholder'" alt="Pastry Assortment">
+                <p>Assorted Pastries</p>
+                <button class="btn primary-btn add-to-cart-btn" data-product-name="Assorted Pastries" data-product-price="20.00">Add to Cart</button>
+            </div>
+            <div class="gallery-item" data-product-name="Freshly Baked Cookies" data-product-price="15.00" data-product-image="images/Freshly_Baked_Cookies.png" data-product-ingredients="Flour, butter, sugar, chocolate chips, eggs, vanilla.">
+                <img src="images/Freshly_Baked_Cookies.png" onerror="this.src='https://via.placeholder.com/250x200/d3c7b2/5a4b3f?text=Freshly+Baked+Cookies_Placeholder'" alt="Cookies">
+                <p>Freshly Baked Cookies</p>
+                <button class="btn primary-btn add-to-cart-btn" data-product-name="Freshly Baked Cookies" data-product-price="15.00">Add to Cart</button>
+            </div>
+            <div class="gallery-item large" data-product-name="Blueberry Cheesecake" data-product-price="30.00" data-product-image="images/Blueberry_Cheesecake.png" data-product-ingredients="Cream cheese, sugar, eggs, graham cracker crust, fresh blueberries.">
+                <img src="images/Blueberry_Cheesecake.png" onerror="this.src='https://via.placeholder.com/400x450/d3c7b2/5a4b3f?text=Blueberry+Cheesecake_Placeholder'" alt="Another Delicious Cake">
+                <p>Blueberry Cheesecake</p>
+                <button class="btn primary-btn add-to-cart-btn" data-product-name="Blueberry Cheesecake" data-product-price="30.00">Add to Cart</button>
+            </div>
+            <!-- New Cake Type 1 -->
+            <div class="gallery-item large" data-product-name="Chocolate Fudge Cake" data-product-price="40.00" data-product-image="images/Chocolate_Fudge_Cake.png" data-product-ingredients="Dark chocolate, flour, sugar, eggs, butter, cocoa powder, fudge frosting.">
+                <img src="images/Chocolate_Fudge_Cake.png" onerror="this.src='https://via.placeholder.com/400x450/d3c7b2/5a4b3f?text=Chocolate+Fudge+Cake_Placeholder'" alt="Chocolate Fudge Cake">
+                <p>Chocolate Fudge Cake</p>
+                <button class="btn primary-btn add-to-cart-btn" data-product-name="Chocolate Fudge Cake" data-product-price="40.00">Add to Cart</button>
+            </div>
+            <!-- New Cake Type 2 -->
+            <div class="gallery-item" data-product-name="Lemon Meringue Pie" data-product-price="25.00" data-product-image="images/Lemon_Meringue_Pie.png" data-product-ingredients="Lemon juice, sugar, eggs, butter, pie crust, meringue topping.">
+                <img src="images/Lemon_Meringue_Pie.png" onerror="this.src='https://via.placeholder.com/250x200/d3c7b2/5a4b3f?text=Lemon+Meringue+Pie_Placeholder'" alt="Lemon Meringue Pie">
+                <p>Lemon Meringue Pie</p>
+                <button class="btn primary-btn add-to-cart-btn" data-product-name="Lemon Meringue Pie" data-product-price="25.00">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section - New section for customer testimonials -->
+    <section class="testimonials-section" id="testimonials-section">
+        <div class="container">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-item">
+                    <p>"The best vegan croissants I've ever tasted! So flaky and delicious. I order every week!"</p>
+                    <span class="testimonial-author">- Sarah L.</span>
+                </div>
+                <div class="testimonial-item">
+                    <p>"Their custom cakes are works of art and taste absolutely incredible. Highly recommend for any occasion."</p>
+                    <span class="testimonial-author">- Mark T.</span>
+                </div>
+                <div class="testimonial-item">
+                    <p>"Finally, a bakery that truly understands gluten-free and vegan needs without compromising on flavor. A gem!"</p>
+                    <span class="testimonial-author">- Jessica R.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section - New section for contact information and form -->
+    <section class="contact-section" id="contact-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><strong>Address:</strong> 123 Bakery Lane, Sweet City, BC 12345</p>
+                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                    <p><strong>Email:</strong> info@bakery.com</p>
+                    <p><strong>Hours:</strong> Mon-Fri: 8 AM - 6 PM | Sat: 9 AM - 5 PM | Sun: Closed</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form action="#" method="POST">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" required></textarea>
+
+                        <button type="submit" class="btn primary-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder - Page footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Bakery. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Product Modal Overlay -->
+    <div class="product-modal-overlay" id="product-modal-overlay">
+        <div class="product-modal-content">
+            <span class="product-modal-close" id="product-modal-close">&times;</span>
+            <img src="" alt="Product Image" class="product-modal-image" id="modal-product-image">
+            <h3 class="product-modal-title" id="modal-product-name"></h3>
+            <p class="product-modal-price" id="modal-product-price"></p>
+            <p class="product-modal-ingredients" id="modal-product-ingredients"></p>
+            <button class="btn primary-btn" id="modal-order-now-btn">Order Now</button>
+        </div>
+    </div>
+
+    <!-- Cart Modal Overlay -->
+    <div class="cart-modal-overlay" id="cart-modal-overlay">
+        <div class="cart-modal-content">
+            <span class="cart-modal-close" id="cart-modal-close">&times;</span>
+            <h3 class="cart-modal-title">Your Shopping Cart</h3>
+            <div id="cart-items-container">
+                <!-- Cart items will be dynamically inserted here -->
+                <p id="empty-cart-message">Your cart is empty.</p>
+            </div>
+            <div class="cart-summary">
+                <p>Total: <span id="cart-total-price">$0.00</span></p>
+                <button class="btn primary-btn" id="checkout-btn">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for the scrolling animation and interactive elements -->
+    <script>
+        let cart = []; // Initialize an empty cart array
+        const cartCountElement = document.getElementById('cart-count'); // Get the cart count element
+        const productModalOverlay = document.getElementById('product-modal-overlay');
+        const productModalCloseBtn = document.getElementById('product-modal-close');
+        const modalProductName = document.getElementById('modal-product-name');
+        const modalProductPrice = document.getElementById('modal-product-price');
+        const modalProductIngredients = document.getElementById('modal-product-ingredients');
+        const modalProductImage = document.getElementById('modal-product-image');
+        const modalOrderNowBtn = document.getElementById('modal-order-now-btn');
+
+        const cartModalOverlay = document.getElementById('cart-modal-overlay');
+        const cartModalCloseBtn = document.getElementById('cart-modal-close');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartTotalPriceElement = document.getElementById('cart-total-price');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const openCartBtn = document.getElementById('open-cart-btn');
+
+
+        // Function to update the cart count display
+        function updateCartCount() {
+            let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
+            cartCountElement.textContent = totalItems;
+            renderCartItems(); // Also re-render cart items when count changes
+        }
+
+        // Function to add an item to the cart
+        function addToCart(productName, productPrice) {
+            const existingItemIndex = cart.findIndex(item => item.name === productName);
+
+            if (existingItemIndex > -1) {
+                // Item already in cart, just increase quantity
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                // Item not in cart, add new with quantity 1
+                cart.push({ name: productName, price: parseFloat(productPrice), quantity: 1 });
+            }
+            updateCartCount(); // Update the cart count display
+            console.log(`${productName} added to cart! Current cart:`, cart);
+        }
+
+        // Function to increase item quantity in cart
+        function increaseQuantity(index) {
+            if (cart[index]) {
+                cart[index].quantity += 1;
+                updateCartCount();
+            }
+        }
+
+        // Function to decrease item quantity in cart
+        function decreaseQuantity(index) {
+            if (cart[index] && cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+                updateCartCount();
+            } else if (cart[index] && cart[index].quantity === 1) {
+                // If quantity is 1, remove the item
+                removeItem(index);
+            }
+        }
+
+        // Function to remove an item from the cart
+        function removeItem(index) {
+            cart.splice(index, 1); // Remove item at specific index
+            updateCartCount();
+        }
+
+        // Function to open the product modal
+        function openProductModal(product) {
+            modalProductName.textContent = product.name;
+            modalProductPrice.textContent = `Price: $${product.price.toFixed(2)}`;
+            modalProductIngredients.textContent = `Ingredients: ${product.ingredients}`;
+            modalProductImage.src = product.image;
+            modalProductImage.alt = product.name;
+
+            // Set data attributes for the "Order Now" button inside the modal
+            modalOrderNowBtn.dataset.productName = product.name;
+            modalOrderNowBtn.dataset.productPrice = product.price;
+
+            productModalOverlay.classList.add('show-modal');
+        }
+
+        // Function to close the product modal
+        function closeProductModal() {
+            productModalOverlay.classList.remove('show-modal');
+        }
+
+        // Function to render items in the cart modal
+        function renderCartItems() {
+            cartItemsContainer.innerHTML = ''; // Clear previous items
+            let totalPrice = 0;
+
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+            } else {
+                emptyCartMessage.style.display = 'none';
+                cart.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('cart-item-display');
+                    itemDiv.innerHTML = `
+                        <div class="cart-item-info">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-price">$${item.price.toFixed(2)}</span>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button class="quantity-btn" data-action="decrease" data-index="${index}">-</button>
+                            <span class="item-quantity">${item.quantity}</span>
+                            <button class="quantity-btn" data-action="increase" data-index="${index}">+</button>
+                            <button class="remove-item-btn" data-index="${index}">X</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemDiv);
+                    totalPrice += item.price * item.quantity;
+                });
+
+                // Add event listeners for new buttons after they are rendered
+                cartItemsContainer.querySelectorAll('.quantity-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        const action = this.dataset.action;
+                        if (action === 'increase') {
+                            increaseQuantity(index);
+                        } else if (action === 'decrease') {
+                            decreaseQuantity(index);
+                        }
+                    });
+                });
+
+                cartItemsContainer.querySelectorAll('.remove-item-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        removeItem(index);
+                    });
+                });
+            }
+            cartTotalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+        }
+
+        // Function to open the cart modal
+        function openCartModal() {
+            renderCartItems(); // Render items before opening
+            cartModalOverlay.classList.add('show-modal');
+        }
+
+        // Function to close the cart modal
+        function closeCartModal() {
+            cartModalOverlay.classList.remove('show-modal');
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scrolling for navigation links and buttons
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href') === '#' ? 'hero-section' : this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        // No need to subtract header height if it's not sticky
+                        window.scrollTo({
+                            top: targetElement.offsetTop, 
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Smooth scrolling for "ORDER NOW" buttons (now points to product gallery)
+            document.querySelectorAll('.scroll-to-products').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector('#product-gallery');
+                    if (targetElement) {
+                        // No need to subtract header height if it's not sticky
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // "View Details" button functionality for feature items
+            document.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const featureItem = this.closest('.feature-item');
+                    const details = featureItem.querySelector('.feature-details');
+
+                    if (details) {
+                        details.classList.toggle('show');
+                        if (details.classList.contains('show')) {
+                            this.textContent = 'Hide Details';
+                        } else {
+                            this.textContent = 'View Details';
+                        }
+                    }
+                });
+            });
+
+            // Event listeners for "Add to Cart" buttons
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Prevent the click from bubbling up to the gallery-item
+                    const productName = this.dataset.productName; // Get product name from data attribute
+                    const productPrice = this.dataset.productPrice; // Get product price from data attribute
+                    addToCart(productName, productPrice); // Call the add to cart function
+                });
+            });
+
+            // Event listeners for opening the product modal
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const product = {
+                        name: this.dataset.productName,
+                        price: parseFloat(this.dataset.productPrice),
+                        image: this.dataset.productImage,
+                        ingredients: this.dataset.productIngredients
+                    };
+                    openProductModal(product);
+                });
+            });
+
+            // Event listener for closing the product modal
+            productModalCloseBtn.addEventListener('click', closeProductModal);
+            productModalOverlay.addEventListener('click', (event) => {
+                if (event.target === productModalOverlay) {
+                    closeProductModal();
+                }
+            });
+
+            // Event listener for "Order Now" button inside the modal
+            modalOrderNowBtn.addEventListener('click', function() {
+                const productName = this.dataset.productName;
+                const productPrice = this.dataset.productPrice;
+                addToCart(productName, productPrice);
+                closeProductModal(); // Close modal after adding to cart
+            });
+
+            // Event listeners for opening the cart modal
+            openCartBtn.addEventListener('click', openCartModal);
+
+            // Event listener for closing the cart modal
+            cartModalCloseBtn.addEventListener('click', closeCartModal);
+            cartModalOverlay.addEventListener('click', (event) => {
+                if (event.target === cartModalOverlay) {
+                    closeCartModal();
+                }
+            });
+
+            updateCartCount(); // Initialize cart count on page load
+        });
+    </script>
+
+</body>
+</html>
